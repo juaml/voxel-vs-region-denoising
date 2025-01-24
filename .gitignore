@@ -2,3 +2,7 @@
 !.gitignore
 !.gitkeep
 !README.md
+!data
+!figures
+!results
+!src
