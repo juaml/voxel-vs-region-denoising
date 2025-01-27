@@ -1,3 +1,4 @@
+
 # Created by https://www.toptal.com/developers/gitignore/api/macos,linux,python,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,linux,python,visualstudiocode
 
@@ -208,7 +209,10 @@ Thumbs.db
 .ruff_cache/
 ruff.toml
 scrap/
-requirements.txt
-src
-devel
+preprocessing/junifer_jobs/VvR*
+preprocessing/yamls/single_runs/
+preprocessing/yamls/*_test.yaml
+logs/
+*.dag
+*.dag*
 

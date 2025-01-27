@@ -1,0 +1,191 @@
+# Configuration file for junifer pipeline
+# Runs denoising (voxel- and region-wise) for ICA-FIX cleaned (F) 
+# resting-state scans (REST1 & REST2) from the HCP-YA data set
+# Denoising is performed on voxel time series (V) or 
+# aggregated ROI time series (R)
+# Applies Schaefer parcellation in 100, 400 & 1000 parcel version
+# Aggregation is performed using mean or first eigenvariate (mean or eigen)
+
+workdir: /tmp
+
+with:
+  - ../extensions/markers/vvr_fc_base.py
+
+datagrabber:
+    kind: DataladHCP1200
+    tasks: 
+      - REST1
+      - REST2
+    ica_fix: true
+
+markers:
+  # markers for cleaning aggregated ROI time series
+  - name: FIX_R_100_eigen
+    kind: VvRFCAggrClean
+    detrend: true
+    standardize: false
+    low_pass: 0.08
+    high_pass: 0.009
+    parcellation: Schaefer100x7
+    aggr_method: eigenvar
+    aggr_demean: false
+    cor_method: correlation
+    cor_method_params:
+      empirical: true
+
+  - name: FIX_R_400_eigen
+    kind: VvRFCAggrClean
+    detrend: true
+    standardize: false
+    low_pass: 0.08
+    high_pass: 0.009
+    parcellation: Schaefer400x7
+    aggr_method: eigenvar
+    aggr_demean: false
+    cor_method: correlation
+    cor_method_params:
+      empirical: true
+
+  - name: FIX_R_1000_eigen
+    kind: VvRFCAggrClean
+    detrend: true
+    standardize: false
+    low_pass: 0.08
+    high_pass: 0.009
+    parcellation: Schaefer1000x7
+    aggr_method: eigenvar
+    aggr_demean: false
+    cor_method: correlation
+    cor_method_params:
+      empirical: true
+
+  - name: FIX_R_100_mean
+    kind: VvRFCAggrClean
+    detrend: true
+    standardize: false
+    low_pass: 0.08
+    high_pass: 0.009
+    parcellation: Schaefer100x7
+    aggr_method: mean
+    aggr_demean: false
+    cor_method: correlation
+    cor_method_params:
+      empirical: true
+
+  - name: FIX_R_400_mean
+    kind: VvRFCAggrClean
+    detrend: true
+    standardize: false
+    low_pass: 0.08
+    high_pass: 0.009
+    parcellation: Schaefer400x7
+    aggr_method: mean
+    aggr_demean: false
+    cor_method: correlation
+    cor_method_params:
+      empirical: true
+
+  - name: FIX_R_1000_mean
+    kind: VvRFCAggrClean
+    detrend: true
+    standardize: false
+    low_pass: 0.08
+    high_pass: 0.009
+    parcellation: Schaefer1000x7
+    aggr_method: mean
+    aggr_demean: false
+    cor_method: correlation
+    cor_method_params:
+      empirical: true
+
+# markers for cleaning voxel time series
+  - name: FIX_V_100_eigen
+    kind: VvRFCCleanAggr
+    detrend: true
+    standardize: false
+    low_pass: 0.08
+    high_pass: 0.009
+    parcellation: Schaefer100x7
+    aggr_method: eigenvar
+    aggr_demean: false
+    cor_method: correlation
+    cor_method_params:
+      empirical: true
+
+  - name: FIX_V_400_eigen
+    kind: VvRFCCleanAggr
+    detrend: true
+    standardize: false
+    low_pass: 0.08
+    high_pass: 0.009
+    parcellation: Schaefer400x7
+    aggr_method: eigenvar
+    aggr_demean: false
+    cor_method: correlation
+    cor_method_params:
+      empirical: true
+
+  - name: FIX_V_1000_eigen
+    kind: VvRFCCleanAggr
+    detrend: true
+    standardize: false
+    low_pass: 0.08
+    high_pass: 0.009
+    parcellation: Schaefer1000x7
+    aggr_method: eigenvar
+    aggr_demean: false
+    cor_method: correlation
+    cor_method_params:
+      empirical: true
+
+  - name: FIX_V_100_mean
+    kind: VvRFCCleanAggr
+    detrend: true
+    standardize: false
+    low_pass: 0.08
+    high_pass: 0.009
+    parcellation: Schaefer100x7
+    aggr_method: mean
+    aggr_demean: false
+    cor_method: correlation
+    cor_method_params:
+      empirical: true
+
+  - name: FIX_V_400_mean
+    kind: VvRFCCleanAggr
+    detrend: true
+    standardize: false
+    low_pass: 0.08
+    high_pass: 0.009
+    parcellation: Schaefer400x7
+    aggr_method: mean
+    aggr_demean: false
+    cor_method: correlation
+    cor_method_params:
+      empirical: true
+
+  - name: FIX_V_1000_mean
+    kind: VvRFCCleanAggr
+    detrend: true
+    standardize: false
+    low_pass: 0.08
+    high_pass: 0.009
+    parcellation: Schaefer1000x7
+    aggr_method: mean
+    aggr_demean: false
+    cor_method: correlation
+    cor_method_params:
+      empirical: true
+
+storage:
+  kind: HDF5FeatureStorage
+  uri: ../../../data/connectomes/240426_HCP_FIX.hdf5
+
+queue:
+  jobname: 240426_VvRHCPFIX
+  kind: HTCondor
+  env:
+    kind: conda
+    name: VvR_juniferv2
+  mem: 13G
+  collect: "yes"

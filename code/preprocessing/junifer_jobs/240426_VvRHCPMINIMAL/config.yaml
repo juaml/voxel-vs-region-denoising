@@ -1,0 +1,182 @@
+# Configuration file for junifer pipeline
+# Runs denoising (voxel- and region-wise) for minimally cleaned (MIN) 
+# resting-state scans (REST1 & REST2) from the HCP-YA data set
+# Denoising is performed on voxel time series (V) or 
+# aggregated ROI time series (R)
+# Applies Schaefer parcellation in 100, 400 & 1000 parcel version
+# Aggregation is performed using mean or first eigenvariate (mean or eigen)
+
+workdir: /tmp
+
+with:
+  - vvr_fc_base.py
+datagrabber:
+  kind: DataladHCP1200
+  tasks:
+    - REST1
+    - REST2
+  ica_fix: false
+
+markers:
+  # markers for cleaning aggregated ROI time series
+  - name: MIN_R_100_eigen
+    kind: VvRFCAggrClean
+    detrend: true
+    standardize: false
+    low_pass: 0.08
+    high_pass: 0.009
+    parcellation: Schaefer100x7
+    aggr_method: eigenvar
+    aggr_demean: false
+    cor_method: correlation
+    cor_method_params:
+      empirical: true
+
+  - name: MIN_R_400_eigen
+    kind: VvRFCAggrClean
+    detrend: true
+    standardize: false
+    low_pass: 0.08
+    high_pass: 0.009
+    parcellation: Schaefer400x7
+    aggr_method: eigenvar
+    aggr_demean: false
+    cor_method: correlation
+    cor_method_params:
+      empirical: true
+
+  - name: MIN_R_1000_eigen
+    kind: VvRFCAggrClean
+    detrend: true
+    standardize: false
+    low_pass: 0.08
+    high_pass: 0.009
+    parcellation: Schaefer1000x7
+    aggr_method: eigenvar
+    aggr_demean: false
+    cor_method: correlation
+    cor_method_params:
+      empirical: true
+
+  - name: MIN_R_100_mean
+    kind: VvRFCAggrClean
+    detrend: true
+    standardize: false
+    low_pass: 0.08
+    high_pass: 0.009
+    parcellation: Schaefer100x7
+    aggr_method: mean
+    aggr_demean: false
+    cor_method: correlation
+    cor_method_params:
+      empirical: true
+
+  - name: MIN_R_400_mean
+    kind: VvRFCAggrClean
+    detrend: true
+    standardize: false
+    low_pass: 0.08
+    high_pass: 0.009
+    parcellation: Schaefer400x7
+    aggr_method: mean
+    aggr_demean: false
+    cor_method: correlation
+    cor_method_params:
+      empirical: true
+
+  - name: MIN_R_1000_mean
+    kind: VvRFCAggrClean
+    detrend: true
+    standardize: false
+    low_pass: 0.08
+    high_pass: 0.009
+    parcellation: Schaefer1000x7
+    aggr_method: mean
+    aggr_demean: false
+    cor_method: correlation
+    cor_method_params:
+      empirical: true
+
+# markers for cleaning voxel time series
+  - name: MIN_V_100_eigen
+    kind: VvRFCCleanAggr
+    detrend: true
+    standardize: false
+    low_pass: 0.08
+    high_pass: 0.009
+    parcellation: Schaefer100x7
+    aggr_method: eigenvar
+    aggr_demean: false
+    cor_method: correlation
+    cor_method_params:
+      empirical: true
+
+  - name: MIN_V_400_eigen
+    kind: VvRFCCleanAggr
+    detrend: true
+    standardize: false
+    low_pass: 0.08
+    high_pass: 0.009
+    parcellation: Schaefer400x7
+    aggr_method: eigenvar
+    aggr_demean: false
+    cor_method: correlation
+    cor_method_params:
+      empirical: true
+
+  - name: MIN_V_1000_eigen
+    kind: VvRFCCleanAggr
+    detrend: true
+    standardize: false
+    low_pass: 0.08
+    high_pass: 0.009
+    parcellation: Schaefer1000x7
+    aggr_method: eigenvar
+    aggr_demean: false
+    cor_method: correlation
+    cor_method_params:
+      empirical: true
+
+  - name: MIN_V_100_mean
+    kind: VvRFCCleanAggr
+    detrend: true
+    standardize: false
+    low_pass: 0.08
+    high_pass: 0.009
+    parcellation: Schaefer100x7
+    aggr_method: mean
+    aggr_demean: false
+    cor_method: correlation
+    cor_method_params:
+      empirical: true
+
+  - name: MIN_V_400_mean
+    kind: VvRFCCleanAggr
+    detrend: true
+    standardize: false
+    low_pass: 0.08
+    high_pass: 0.009
+    parcellation: Schaefer400x7
+    aggr_method: mean
+    aggr_demean: false
+    cor_method: correlation
+    cor_method_params:
+      empirical: true
+
+  - name: MIN_V_1000_mean
+    kind: VvRFCCleanAggr
+    detrend: true
+    standardize: false
+    low_pass: 0.08
+    high_pass: 0.009
+    parcellation: Schaefer1000x7
+    aggr_method: mean
+    aggr_demean: false
+    cor_method: correlation
+    cor_method_params:
+      empirical: true
+
+storage:
+  kind: HDF5FeatureStorage
+  uri: /data/project/voxel_vs_roi/VvsR/data/connectomes/240426_HCP_MINIMAL.hdf5
+

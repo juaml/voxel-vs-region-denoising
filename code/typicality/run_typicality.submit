@@ -1,0 +1,31 @@
+
+# The environment
+universe = vanilla
+getenv = True
+
+# Resources
+request_cpus = 1
+request_memory = 8G
+request_disk = 1G
+
+# Executable
+initial_dir = /data/project/voxel_vs_roi/VvsR/src/typicality
+executable = $(initial_dir)/run_conda.sh
+transfer_executable = False
+
+arguments = VvR_analysis python /data/project/voxel_vs_roi/VvsR/src/typicality/1-TFC_analysis.py 240426_HCP_FIX HCP_FIX
+
+# Logs
+log = /data/project/voxel_vs_roi/VvsR/src/typicality/logs/typicality_run_240426_HCPFIX.log
+output = /data/project/voxel_vs_roi/VvsR/src/typicality/logs/typicality_run_240426_HCPFIX.out
+error = /data/project/voxel_vs_roi/VvsR/src/typicality/logs/typicality_run_240426_HCPFIX.err
+queue
+
+
+arguments = VvR_analysis python /data/project/voxel_vs_roi/VvsR/src/typicality/1-TFC_analysis.py 240426_HCP_MINIMAL HCP_MINIMAL
+
+# Logs
+log = /data/project/voxel_vs_roi/VvsR/src/typicality/logs/typicality_run_240426_HCPMINIMAL.log
+output = /data/project/voxel_vs_roi/VvsR/src/typicality/logs/typicality_run_240426_HCPMINIMAL.out
+error = /data/project/voxel_vs_roi/VvsR/src/typicality/logs/typicality_run_240426_HCPMINIMAL.err
+queue
